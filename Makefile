@@ -15,15 +15,16 @@ prefix := $(DESTDIR)/usr
 CCFLAGS=-Ofast 
 #CCFLAGS=
 
+
 # define all programs
-PROGRAMS = ssd1306_demo teleinfo-oled
+PROGRAMS = ssd1306_demo 
 SOURCES = ${PROGRAMS:=.cpp}
 LD_LIBRARY_PATH=$(DESTDIR)/lib
 
 all: ${PROGRAMS}
 
 ${PROGRAMS}: ${SOURCES}
-	$(CC) ${CCFLAGS} -Wall -L../ -lssd1306 $@.cpp -o $@
+	$(CC) ${CCFLAGS} -Wall -I$(INC) -L$(LIBDIR) -L$(SO) -lssd1306 -li2c $@.cpp -o $@
 
 clean:
 	rm -rf $(PROGRAMS)
@@ -36,5 +37,3 @@ install: all
 	done
 
 .PHONY: install
-
-
